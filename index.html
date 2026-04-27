@@ -4,68 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Model News</title>
+    
+    <!-- 引入 Google 手寫字體 (Caveat) 讓文字看起來像用筆寫的 -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+
     <style>
         /* 設定整個網頁的背景 */
         body {
             /* 這裡呼叫你剛剛存好的背景圖片 bg.jpg */
             background-image: url('bg.jpg'); 
-            background-size: 100% 100%;       /* 讓圖片依比例放大填滿畫面 */
-            background-position: center;  /* 讓圖片保持在正中間 */
-            background-repeat: no-repeat; /* 背景不重複拼貼 */
-            height: 100vh;                /* 讓網頁高度等於螢幕高度 */
+            background-size: 100% 100%;   /* 讓圖片填滿且不裁切邊框 */
+            background-position: center;  
+            background-repeat: no-repeat; 
+            height: 100vh;                
             margin: 0;
             display: flex;
-            justify-content: center;      /* 水平置中內容 */
-            align-items: center;          /* 垂直置中內容 */
-            font-family: Arial, sans-serif;
+            justify-content: center;      
+            align-items: center;          
         }
 
-        /* 建立一個隱形的區塊，對齊在背景圖片的「白紙」上 */
+        /* 隱形的區塊，用來對齊白紙的位置 */
         .paper-area {
-            width: 400px;       /* 限制文字區塊的寬度 */
-            height: 280px;      /* 限制文字區塊的高度 */
-            margin-top: 80px;   /* 將區塊往下推，避開上方的 3D MODEL 標題 */
-            margin-left: 0px;   /* 依需求可微調左右位置 */
+            width: 450px;       
+            height: 320px;      
+            margin-top: 100px;  /* 依據你的螢幕微調上下位置 */
+            margin-left: 20px;  /* 依據你的螢幕微調左右位置 */
             padding: 10px;
-            overflow-y: auto;   /* 如果內容太多，會在紙張範圍內出現卷軸 */
-            text-align: left;   /* 文字靠左對齊 */
+            display: flex;
+            flex-direction: column; /* 讓按鈕垂直排列 */
+            align-items: center;    /* 按鈕置中 */
+            gap: 20px;              /* 按鈕之間的間距 */
+            overflow-y: auto;   
         }
 
-        /* 設定紙張上面的超連結文字樣式（模仿圖片中的藍色底線文字） */
+        /* === 華麗變身：把超連結變成剪貼紙條 === */
         .paper-area a {
-            display: block;          /* 讓每個連結獨立佔一行 */
-            font-size: 24px;         /* 字體大小 */
-            color: #0000EE;          /* 經典的超連結藍色 */
-            text-decoration: underline; /* 加上底線 */
-            margin-bottom: 30px;     /* 每個選項之間的垂直距離 */
-            letter-spacing: 1px;     /* 字元間距稍微拉開 */
+            display: inline-block;
+            font-family: 'Caveat', cursive, sans-serif; /* 使用手寫字體 */
+            font-size: 28px;
+            color: #333333;             /* 深灰色文字，像麥克筆 */
+            text-decoration: none;      /* 移除醜醜的底線 */
+            background-color: rgba(255, 253, 240, 0.9); /* 微黃的紙張底色 */
+            padding: 8px 30px;
+            border-radius: 5px;         /* 稍微圓角 */
+            border: 2px dashed #b2bec3; /* 虛線邊框，像撕下來的紙 */
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.3); /* 加上陰影產生立體感 */
+            
+            /* 讓按鈕有隨機傾斜的感覺 */
+            transform: rotate(-2deg);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 動畫漸變設定 */
         }
 
-        /* 滑鼠游標移過去時，顏色變深 */
+        /* 讓偶數的按鈕往另一個方向傾斜，看起來更自然 */
+        .paper-area a:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        /* === 滑鼠滑過時的特效 === */
         .paper-area a:hover {
-            color: #000080;
+            color: #d35400;             /* 字體變成亮橘色 */
+            background-color: #ffeaa7;  /* 背景變成螢光黃色 */
+            border-color: #d35400;      
+            transform: scale(1.1) rotate(0deg); /* 放大並轉正 */
+            box-shadow: 4px 8px 15px rgba(0,0,0,0.4); /* 陰影加深，產生浮起來的效果 */
+            z-index: 10;
         }
 
-        /* 美化卷軸（模仿圖片中細細的灰色卷軸） */
+        /* 美化卷軸（如果按鈕太多需要滾動的話） */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.5); 
+            background: transparent; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #cccccc; 
-            border-radius: 5px;
+            background: rgba(0,0,0,0.2); 
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
 
+    <!-- 放在白紙區域上的連結按鈕 -->
     <div class="paper-area">
-        <a href="sketchfab.html">SketchFab Example</a>
-        <a href="0.babylonViewer Basic.html">Babylon Viewer Basic</a>
-        <a href="1.babylonViewer Select.html">Babylon Viewer Select</a>
-        <a href="2.babylonViewer Navbar.html">Babylon Viewer Navbar</a>
+        <a href="sketchfab.html">★ SketchFab Example</a>
+        <a href="0.babylonViewer Basic.html">★ Babylon Viewer Basic</a>
+        <a href="1.babylonViewer Select.html">★ Babylon Viewer Select</a>
+        <a href="2.babylonViewer Navbar.html">★ Babylon Viewer Navbar</a>
     </div>
 
 </body>
