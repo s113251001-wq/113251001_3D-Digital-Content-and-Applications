@@ -1,43 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>BabylonJS Viewer - Basic usage</title>
-        <style>
-			.viewerContainer {
-                width: 400px;
-                height: 500px;				
-				image-rendering: pixelated; /* to prevent blury when zoomed out */
-			}
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babylon Viewer - VR & Navbar</title>
+    
+    <script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 
-        </style>
-		<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>
-	<script>
-		function loadit(modelUrl) {
-			if(modelUrl) {
-				let viewer = BabylonViewer.viewerManager.getViewerById('viewerID');
-				let temp = viewer.templateManager.getTemplate('navBar');
-				let param= temp._configuration;
-				param.params.hideVr=false;
-                param.params.disableOnFullscreen=true;
-				temp.updateParams(param);
-				viewer.loadModel(modelUrl)
-			}
-		}
-	</script>
+    <style>
+        /* === 延續首頁的網點手帳背景 === */
+        body {
+            background-color: #FDFBF7;
+            background-image: radial-gradient(#D1D5DB 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Noto Sans TC', sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* === 退出/返回按鈕 === */
+        .back-btn {
+            align-self: flex-start;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto 20px auto;
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: #E67E22;
+            text-decoration: none;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            color: #D35400;
+            transform: translateX(-5px);
+        }
+
+        /* === 展示卡片區塊 === */
+        .workspace-card {
+            background: #FFFFFF;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            position: relative;
+        }
+
+        /* 標題與說明 */
+        .header-group {
+            text-align: center;
+            border-bottom: 2px dashed #F0F0F0;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            color: #2C3E50;
+            font-size: 1.8rem;
+        }
+
+        .hint {
+            color: #7F8C8D;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* === 下拉選單樣式 === */
+        .custom-select {
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            color: #34495E;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            width: 100%;
+            background-color: #F9FAFB;
+            transition: all 0.3s;
+        }
+
+        .custom-select:hover {
+            border-color: #3498DB;
+        }
+
+        /* === 3D 展示視窗容器 === */
+        .viewerContainer {
+            width: 100%;
+            height: 550px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fcfcfc;
+            border: 1px solid #EEEEEE;
+        }
+
+        babylon {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        // 這是此檔案專屬的進階載入程式碼，用來啟用 VR 按鈕與自定義導覽列 
+        function loadit(modelUrl) {
+            if(modelUrl) {
+                let viewer = BabylonViewer.viewerManager.getViewerById('viewerID');
+                
+                // 取得並更新導覽列設定 
+                let temp = viewer.templateManager.getTemplate('navBar');
+                let param = temp._configuration;
+                
+                param.params.hideVr = false; // 顯示 VR 按鈕 
+                param.params.disableOnFullscreen = true;
+                
+                temp.updateParams(param);
+                viewer.loadModel(modelUrl);
+            }
+        }
+    </script>
 </head>
 <body>
-<select onchange="loadit(this.value)">
-	<option value="">select model</option>
-	<option value="./models/alice.glb">Alice</option>
-	<option value="./models/Astronaut.glb">Astronaut</option>
-	<option value="./models/buddha.glb">Buddha</option>
-</select>
-<div class='viewerContainer'>
-	<babylon id="viewerID"><vr></vr></babylon>
-</div>
-</body>
 
+    <div style="width: 100%; max-width: 900px;">
+        <a href="index.html" class="back-btn">← Exit to Dashboard</a>
+    </div>
+    
+    <div class="workspace-card">
+        
+        <div class="header-group">
+            <h2>3D Immersive Viewer</h2>
+            <p class="hint">(支援 VR 模式與進階導覽選單)</p>
+        </div>
+        
+        <select class="custom-select" onchange="loadit(this.value)">
+            <option value="">-- 點擊選擇模型以啟用 VR 視窗 --</option>
+            <option value="./models/hw2_test3.glb">Kenney</option>
+            <option value="./models/merged-model.glb">Girl</option>
+            <option value="./models/merged-model (2).glb">Michelle</option>
+        </select>
+
+        <div class="viewerContainer">
+            <babylon id="viewerID"><vr></vr></babylon>
+        </div>
+        
+    </div>
+
+</body>
 </html>
