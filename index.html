@@ -1,20 +1,114 @@
-hello MyFriend
-<hr/>
-<a href="sketchfab.html">SketchFab Example</a> <br/>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Work - 3D Show Case</title>
+    <script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>
+    
+    <style>
+        /* === 模仿截圖中的 CSS 樣式 === */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            /* 深藍色到紫色/橘色的背景漸層 */
+            background: linear-gradient(135deg, #0a1128 0%, #3a1c5e 60%, #ff8c42 100%);
+            min-height: 100vh;
+            text-align: center;
+        }
 
-<p>
-<a href="0.babylonViewer Basic.html">Babylon Viewer Basic</a>
-</p>
+        header {
+            padding: 80px 20px 40px 20px;
+        }
 
-<p>
-<a href="1.babylonViewer Select.html">Babylon Viewer Select</a>
-</p>
+        h1 {
+            font-size: 60px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-<a href="2.babylonViewer Navbar.html">Babylon Viewer Navbar</a>
-<hr/>
-<!--
-<p>
-<a href="./webAR">WebAR 範例</a>
-</p>
--->
+        .subtitle {
+            font-size: 20px;
+            opacity: 0.8;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
 
+        /* === 核心排版：3D 網格區域 === */
+        .work-container {
+            display: grid;
+            /* 讓網格自動適應，每個卡片最小 320px */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* === 模仿截圖中的 3D 展示卡片樣式 === */
+        .work-item {
+            background-color: rgba(255, 255, 255, 0.05); /* 半透明背景 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+        }
+
+        /* 滑鼠滑過時的動畫效果 */
+        .work-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 140, 66, 0.4);
+            border-color: rgba(255, 140, 66, 0.5);
+        }
+
+        /* 縮小 Babylon Viewer 的範圍 */
+        babylon {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding: 30px;
+            opacity: 0.6;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Work</h1>
+        <p class="subtitle">3D model show case</p>
+    </header>
+
+    <main class="work-container">
+
+        <div class="work-item">
+            <babylon model="./models/你的模型1.glb" camera-auto-rotate="true" antialiasing="true"></babylon>
+        </div>
+
+        <div class="work-item">
+            <babylon model="./models/你的模型2.glb" camera-auto-rotate="true" antialiasing="true"></babylon>
+        </div>
+
+        <div class="work-item">
+            <babylon model="./models/你的模型3.glb" camera-auto-rotate="true" antialiasing="true"></babylon>
+        </div>
+
+        </main>
+    <footer>
+        <p>Made with love in 2024</p>
+        <p>Powered by your skill and Babylon.js</p>
+    </footer>
+
+</body>
+</html>
