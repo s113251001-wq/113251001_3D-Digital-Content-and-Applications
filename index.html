@@ -3,94 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model News</title>
+    <title>My 3D Models Showcase</title>
     
-    <!-- 引入 Google 手寫字體 (Caveat) 讓文字看起來像用筆寫的 -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* 設定整個網頁的背景 */
+        /* === 現代極簡風格設定 === */
+        :root {
+            --primary-color: #4F46E5; /* 科技感的靛藍色 */
+            --bg-color: #F9FAFB;      /* 非常淡的灰白色背景 */
+            --card-bg: #FFFFFF;       /* 純白卡片 */
+            --text-main: #111827;     /* 深灰色主文字 */
+            --text-muted: #6B7280;    /* 淺灰色副文字 */
+        }
+
         body {
-            /* 這裡呼叫你剛剛存好的背景圖片 bg.jpg */
-            background-image: url('bg.jpg'); 
-            background-size: 100% 100%;   /* 讓圖片填滿且不裁切邊框 */
-            background-position: center;  
-            background-repeat: no-repeat; 
-            height: 100vh;                
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             display: flex;
-            justify-content: center;      
-            align-items: center;          
-        }
-
-        /* 隱形的區塊，用來對齊白紙的位置 */
-        .paper-area {
-            width: 450px;       
-            height: 320px;      
-            margin-top: 100px;  /* 依據你的螢幕微調上下位置 */
-            margin-left: 20px;  /* 依據你的螢幕微調左右位置 */
-            padding: 10px;
-            display: flex;
-            flex-direction: column; /* 讓按鈕垂直排列 */
-            align-items: center;    /* 按鈕置中 */
-            gap: 20px;              /* 按鈕之間的間距 */
-            overflow-y: auto;   
-        }
-
-        /* === 華麗變身：把超連結變成剪貼紙條 === */
-        .paper-area a {
-            display: inline-block;
-            font-family: 'Caveat', cursive, sans-serif; /* 使用手寫字體 */
-            font-size: 28px;
-            color: #333333;             /* 深灰色文字，像麥克筆 */
-            text-decoration: none;      /* 移除醜醜的底線 */
-            background-color: rgba(255, 253, 240, 0.9); /* 微黃的紙張底色 */
-            padding: 8px 30px;
-            border-radius: 5px;         /* 稍微圓角 */
-            border: 2px dashed #b2bec3; /* 虛線邊框，像撕下來的紙 */
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.3); /* 加上陰影產生立體感 */
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
             
-            /* 讓按鈕有隨機傾斜的感覺 */
-            transform: rotate(-2deg);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 動畫漸變設定 */
+            /* 加上非常微弱的網格背景，增加一點點科技感細節 */
+            background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
-        /* 讓偶數的按鈕往另一個方向傾斜，看起來更自然 */
-        .paper-area a:nth-child(even) {
-            transform: rotate(2deg);
+        /* === 網頁頭部區域 === */
+        header {
+            margin-top: 10vh;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
-        /* === 滑鼠滑過時的特效 === */
-        .paper-area a:hover {
-            color: #d35400;             /* 字體變成亮橘色 */
-            background-color: #ffeaa7;  /* 背景變成螢光黃色 */
-            border-color: #d35400;      
-            transform: scale(1.1) rotate(0deg); /* 放大並轉正 */
-            box-shadow: 4px 8px 15px rgba(0,0,0,0.4); /* 陰影加深，產生浮起來的效果 */
-            z-index: 10;
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            letter-spacing: -1px;
+            color: var(--text-main);
         }
 
-        /* 美化卷軸（如果按鈕太多需要滾動的話） */
-        ::-webkit-scrollbar {
-            width: 8px;
+        /* 讓標題有一點漸層點綴 */
+        h1 span {
+            background: linear-gradient(to right, #4F46E5, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        ::-webkit-scrollbar-track {
-            background: transparent; 
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin: 0;
         }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.2); 
-            border-radius: 4px;
+
+        /* === 導覽選單區域 === */
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* === 現代化卡片按鈕 === */
+        .nav-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 24px 32px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.25rem;
+            border: 2px solid transparent;
+            
+            /* 柔和的網頁陰影 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 卡片 Hover 互動效果 */
+        .nav-card:hover {
+            transform: translateY(-4px); /* 輕微上浮 */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* 陰影放大 */
+            border-color: var(--primary-color); /* 邊框亮起 */
+            color: var(--primary-color);
+        }
+
+        /* 按鈕右側的箭頭動畫 */
+        .nav-card::after {
+            content: '→';
+            font-size: 1.5rem;
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-card:hover::after {
+            opacity: 1;
+            transform: translateX(0);
         }
     </style>
 </head>
 <body>
 
-    <!-- 放在白紙區域上的連結按鈕 -->
-    <div class="paper-area">
-        <a href="sketchfab.html">★ SketchFab Example</a>
-        <a href="0.babylonViewer Basic.html">★ Babylon Viewer Basic</a>
-        <a href="1.babylonViewer Select.html">★ Babylon Viewer Select</a>
-        <a href="2.babylonViewer Navbar.html">★ Babylon Viewer Navbar</a>
+    <header>
+        <h1>My <span>3D Models</span></h1>
+        <p class="subtitle">Digital Content & Applications Showcase</p>
+    </header>
+
+    <div class="nav-container">
+        <a href="sketchfab.html" class="nav-card">SketchFab Example</a>
+        <a href="0.babylonViewer Basic.html" class="nav-card">Babylon Viewer Basic</a>
+        <a href="1.babylonViewer Select.html" class="nav-card">Babylon Viewer Select</a>
+        <a href="2.babylonViewer Navbar.html" class="nav-card">Babylon Viewer Navbar</a>
     </div>
 
 </body>
